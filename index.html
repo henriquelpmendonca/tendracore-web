@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes" />
+    <title>Unity Web Player | Tendracore</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+      }
+      #unity-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      #diagnostics-icon {
+        position: fixed;
+        bottom: 10px;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas
+      id="unity-canvas"
+      width="960"
+      height="600"
+      tabindex="-1"
+      style="background: #231F20"
+    ></canvas>
+    <div id="loading" style="position:fixed;left:0;right:0;bottom:12%;text-align:center;font:600 16px Arial,sans-serif;color:#cfc3ff;pointer-events:none">
+      <div id="loading-text">Loading... 0%</div>
+      <div style="width:min(60vw,320px);height:6px;background:#3a2f5c;margin:10px auto 0;border-radius:3px;overflow:hidden"><div id="loading-bar" style="width:0%;height:100%;background:#a98bff"></div></div>
+    </div>
+    <script>
+      // Mostra erros na tela (em vez de ficar cinza sem explicação) e ajuda a achar onde o carregamento para.
+      window.addEventListener("error", function (e) {
+        var t = document.getElementById("loading-text");
+        if (t) { t.style.color = "#ff8a8a"; t.textContent = "Error: " + (e.message || e.type); }
+      });
+      window.addEventListener("unhandledrejection", function (e) {
+        var t = document.getElementById("loading-text");
+        if (t) { t.style.color = "#ff8a8a"; t.textContent = "Error: " + (e.reason && e.reason.message || e.reason); }
+      });
+    </script>
+    <script src="Build/GitHubPages.loader.js"></script>
+    <script>
+            createUnityInstance(document.querySelector("#unity-canvas"), {
+              arguments: [],
+              dataUrl: "Build/GitHubPages.data.unityweb",
+              frameworkUrl: "Build/GitHubPages.framework.js.unityweb",
+              codeUrl: "Build/GitHubPages.wasm.unityweb",
+              streamingAssetsUrl: "StreamingAssets",
+              companyName: "DefaultCompany",
+              productName: "Tendracore",
+              productVersion: "0.1.0",
+              // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+              // Limita a densidade de pixels: celulares e telas 4K desenhariam 3-4x mais pixels sem ganho visível.
+              devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
+            }, (progress) => {
+              var pct = Math.round(progress * 100);
+              document.getElementById("loading-bar").style.width = pct + "%";
+              document.getElementById("loading-text").textContent = progress >= 0.9 ? "Starting... (can take a moment on slow devices)" : "Loading... " + pct + "%";
+            }).then((unityInstance) => {
+              var l = document.getElementById("loading"); if (l) l.style.display = "none";
+            }).catch((message) => {
+              alert(message);
+            });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "dataFile": "Build/GitHubPages.data.unityweb",
+  "codeFile": "Build/GitHubPages.wasm.unityweb",
+  "loaderFile": "Build/GitHubPages.loader.js",
+  "frameworkFile": "Build/GitHubPages.framework.js.unityweb"
+}
