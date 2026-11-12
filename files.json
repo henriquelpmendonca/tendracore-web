@@ -1,6 +1,6 @@
 {
-  "dataFile": "Build/GitHubPages.data.unityweb",
-  "codeFile": "Build/GitHubPages.wasm.unityweb",
+  "dataFile": "Build/GitHubPages.data",
+  "codeFile": "Build/GitHubPages.wasm",
   "loaderFile": "Build/GitHubPages.loader.js",
-  "frameworkFile": "Build/GitHubPages.framework.js.unityweb"
+  "frameworkFile": "Build/GitHubPages.framework.js"
 }
